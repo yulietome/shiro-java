@@ -1,5 +1,6 @@
 package com.baizhi.shirojava;
 import com.baizhi.shirojava.realm.MyRealm;
+import com.baizhi.shirojava.realm.MyRealm1;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -15,6 +16,8 @@ import org.apache.shiro.subject.Subject;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
+import java.util.List;
 
 
 @SpringBootTest
@@ -25,7 +28,7 @@ class ShiroJavaApplicationTests {
     /**
      * 获取主体对象
      * */
-        MyRealm realm = new MyRealm();
+        MyRealm1 realm = new MyRealm1();
         //创建凭证匹配器
         HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
         //设置加密算法
@@ -45,6 +48,16 @@ class ShiroJavaApplicationTests {
         }finally {
             boolean b =subject.isAuthenticated();
             System.out.println(b);
+            if (b){
+                List<String> strings = Arrays.asList("admin", "super");
+                boolean aSuper = subject.hasRole("super");
+                boolean[] booleans = subject.hasRoles(strings);
+                for (boolean aBoolean : booleans) {
+                    System.out.println("aBoolean:"+aBoolean);
+                }
+
+                System.out.println(aSuper);
+            }
         }
 
     }

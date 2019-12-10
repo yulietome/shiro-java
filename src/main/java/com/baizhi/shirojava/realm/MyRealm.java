@@ -13,6 +13,7 @@ public class MyRealm extends AuthenticatingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         String principal = (String) authenticationToken.getPrincipal();
         AuthenticationInfo authenticationInfo = null;
+
         if (principal.equals("zhangsan")){
             authenticationInfo  = new SimpleAuthenticationInfo("zhangsan","7fc690da7fb084b0cbc490412d25ecbc", ByteSource.Util.bytes("ssss"),this.getName());
         }
