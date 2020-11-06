@@ -56,7 +56,6 @@ class ShiroJavaApplicationTests {
                     System.out.println("aBoolean:"+aBoolean);
                 }
 
-                System.out.println(aSuper);
             }
         }
 
