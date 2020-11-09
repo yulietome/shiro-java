@@ -1,4 +1,5 @@
 package com.baizhi.shirojava;
+import com.baizhi.shirojava.realm.CustomizeMD5Realm;
 import com.baizhi.shirojava.realm.MyRealm;
 import com.baizhi.shirojava.realm.MyRealm1;
 import org.apache.shiro.SecurityUtils;
@@ -62,8 +63,51 @@ class ShiroJavaApplicationTests {
     }
     @Test
     void contextLoads2(){
-        Md5Hash md5Hash=new Md5Hash("123456","ssss",1024);
+        Md5Hash md5Hash=new Md5Hash("123","dasfff",1024);
+//        md5Hash.setIterations(1024);
+
         String s = md5Hash.toHex();
         System.out.println(s);
+    }
+    @Test
+    void contextLoads3() {
+        /**
+         * 获取主体对象
+         * */
+//        MyRealm1 realm = new MyRealm1();
+        //创建凭证匹配器
+//        HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
+//        //设置加密算法
+//        credentialsMatcher.setHashAlgorithmName("MD5");
+//        //设置散列次数
+//        credentialsMatcher.setHashIterations(1024);
+//        //将凭证匹配器加入自定义realm中
+        CustomizeMD5Realm realm = new CustomizeMD5Realm();
+//        realm.setCredentialsMatcher(credentialsMatcher);
+        AuthenticationToken usernamePasswordToken = new UsernamePasswordToken("zhangsan","123");
+        SecurityManager securityManager = new DefaultSecurityManager(realm);
+        SecurityUtils.setSecurityManager(securityManager);
+        Subject subject = SecurityUtils.getSubject();
+        try {
+            subject.login(usernamePasswordToken);
+            boolean authenticated = subject.isAuthenticated();
+            System.out.println(authenticated);
+        }catch (AuthenticationException ae){
+            ae.printStackTrace();
+        }
+//        finally {
+//            boolean b =subject.isAuthenticated();
+//            System.out.println(b);
+//            if (b){
+//                List<String> strings = Arrays.asList("admin", "super");
+//                boolean aSuper = subject.hasRole("super");
+//                boolean[] booleans = subject.hasRoles(strings);
+//                for (boolean aBoolean : booleans) {
+//                    System.out.println("aBoolean:"+aBoolean);
+//                }
+//
+//            }
+//        }
+
     }
 }
